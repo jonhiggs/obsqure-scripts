@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+export AWS_CONFIG_FILE="/root/.aws.cfg"
+
+for file in /srv/backups/production_obsqure-*; do
+	aws s3 mv ${file} s3://obsqure-backups/MySQL/$(basename ${file}) &> /dev/null
+done
