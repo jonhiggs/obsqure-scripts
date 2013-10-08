@@ -4,7 +4,7 @@ unicorn_bin="/usr/local/bin/unicorn_rails"
 unicorn_config="${dir}/config/unicorn.rb"
 unicorn_pid="${dir}/tmp/pids/unicorn.pid"
 
-if -z [ "${RAILS_ENV}" ]; then RAILS_ENV="development"; fi
+if [ -z "${RAILS_ENV}" ]; then RAILS_ENV="development"; fi
 
 case $1 in
   "start")
