@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 export AWS_CONFIG_FILE="/root/.aws.cfg"
 
-if [ "$1" -eq "-q" ]; then
+if [ "$1" == "-q" ]; then
   output="/dev/null"
 else
   output="/dev/stdout"

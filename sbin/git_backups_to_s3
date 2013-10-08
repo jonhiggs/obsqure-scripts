@@ -3,7 +3,7 @@ export AWS_CONFIG_FILE="/root/.aws.cfg"
 datestamp=$(date +"%Y-%m-%dT%H-%M-%S")
 backup_file="/tmp/git-${datestamp}.tar.bz2"
 
-if [ "$1" -eq "-q" ]; then
+if [ "$1" == "-q" ]; then
   output="/dev/null"
 else
   output="/dev/stdout"
