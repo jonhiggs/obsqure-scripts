@@ -22,7 +22,7 @@ tar jcf $backup_file \
   /etc/sudoers            \
   /var/cache/munin/www/*  \
   /var/spool/mail/*       \
-
+  &> /dev/null
 
 for file in /srv/backups/system_files-*.tar.bz2; do
   aws s3 mv ${file} s3://obsqure-backups/Alpha/$(basename ${file}) &> $output
