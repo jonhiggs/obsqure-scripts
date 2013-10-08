@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+export AWS_CONFIG_FILE="/root/.aws.cfg"
+datestamp=$(date +"%Y-%m-%dT%H-%M-%S")
+backup_file="/srv/backups/system_files-${datestamp}.tar.bz2"
+
+if [ "$1" == "-q" ]; then
+  output="/dev/null"
+else
+  output="/dev/stdout"
+fi
+
+tar jcf $backup_file \
+  /etc/apt/*              \
+  /etc/cron*              \
+  /etc/group              \
+  /etc/hosts              \
+  /etc/iptables/*         \
+  /etc/logrotate.d/*      \
+  /etc/munin/*            \
+  /etc/mysql/*            \
+  /etc/passwd             \
+  /etc/sudoers            \
+  /var/cache/munin/www/*  \
+  /var/spool/mail/*       \
+
+
+for file in /srv/backups/system_files-*.tar.bz2; do
+  aws s3 mv ${file} s3://obsqure-backups/Alpha/$(basename ${file}) &> $output
+done
