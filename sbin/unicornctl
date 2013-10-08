@@ -9,12 +9,11 @@ if [ -z "${RAILS_ENV}" ]; then RAILS_ENV="development"; fi
 case $1 in
   "start")
     echo "starting unicorn"
-    cd ${dir}
-    ${unicorn_bin} -c ${unicorn_config} -E $RAILS_ENV -D
+    sudo start unicorn-obsqure
   ;;
   "stop")
     echo "stopping unicorn"
-    if [ -f $unicorn_pid ]; then kill `cat ${unicorn_pid}`; fi
+    sudo stop unicorn-obsqure
   ;;
   "graceful-stop")
     echo "gracefully stopping unicorn"
@@ -26,9 +25,7 @@ case $1 in
   ;;
   "restart")
     echo "restarting unicorn"
-    if [ -f $unicorn_pid ]; then kill `cat ${unicorn_pid}`; fi
-    cd ${dir}
-    ${unicorn_bin} -c ${unicorn_config} -E $RAILS_ENV -D
+    sudo restart unicorn-obsqure
   ;;
   *)
     echo "options are start|stop|graceful-stop|reload|restart"
