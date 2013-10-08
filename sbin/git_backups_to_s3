@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 export AWS_CONFIG_FILE="/root/.aws.cfg"
 datestamp=$(date +"%Y-%m-%dT%H-%M-%S")
-backup_file="/tmp/git-${datestamp}.tar.bz2"
+backup_file="/srv/backups/git-${datestamp}.tar.bz2"
 
 if [ "$1" == "-q" ]; then
   output="/dev/null"
@@ -12,6 +12,6 @@ fi
 cd /srv
 tar jcvf $backup_file git/ &> $output
 
-for file in /tmp/git-*.tar.bz2; do
+for file in /srv/backups/git-*.tar.bz2; do
   aws s3 mv ${file} s3://obsqure-backups/Git/$(basename ${file}) &> $output
 done
