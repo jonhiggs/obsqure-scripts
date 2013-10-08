@@ -1,6 +1,6 @@
 #!/bin/bash
 dir="/srv/www/obsqure/current"
-unicorn_bin="/usr/local/sbin/unicorn_rails"
+unicorn_bin="/usr/local/bin/unicorn_rails"
 unicorn_config="${dir}/config/unicorn.rb"
 unicorn_pid="${dir}/tmp/pids/unicorn.pid"
 
