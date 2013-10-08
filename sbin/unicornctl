@@ -1,0 +1,28 @@
+#!/bin/bash
+dir="/srv/www/obsqure/current"
+unicorn_bin="/usr/local/sbin/unicorn_rails"
+unicorn_config="${dir}/config/unicorn.rb"
+unicorn_pid="${dir}/tmp/pids/unicorn.pid"
+
+if -z [ "${RAILS_ENV}" ]; then RAILS_ENV="development"; fi
+
+case $1 in
+  "start")
+    cd ${dir}
+    ${unicorn_bin} -c ${unicorn_config} -E $RAILS_ENV -D
+  ;;
+  "stop")
+    if [ -f $unicorn_pid ]; then kill `cat ${unicorn_pid}`; fi
+  ;;
+  "graceful-stop")
+    if [ -f $unicorn_pid ]; then kill -s QUIT `cat ${unicorn_pid}`; fi
+  ;;
+  "reload")
+    if [ -f $unicorn_pid ]; then kill -s USR2 `cat #{unicorn_pid}`; fi
+  ;;
+  "restart")
+    if [ -f $unicorn_pid ]; then kill `cat ${unicorn_pid}`; fi
+    cd ${dir}
+    ${unicorn_bin} -c ${unicorn_config} -E $RAILS_ENV -D
+  ;;
+esac
