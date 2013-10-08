@@ -8,21 +8,29 @@ if [ -z "${RAILS_ENV}" ]; then RAILS_ENV="development"; fi
 
 case $1 in
   "start")
+    echo "starting unicorn"
     cd ${dir}
     ${unicorn_bin} -c ${unicorn_config} -E $RAILS_ENV -D
   ;;
   "stop")
+    echo "stopping unicorn"
     if [ -f $unicorn_pid ]; then kill `cat ${unicorn_pid}`; fi
   ;;
   "graceful-stop")
+    echo "gracefully stopping unicorn"
     if [ -f $unicorn_pid ]; then kill -s QUIT `cat ${unicorn_pid}`; fi
   ;;
   "reload")
+    echo "reloading unicorn config"
     if [ -f $unicorn_pid ]; then kill -s USR2 `cat #{unicorn_pid}`; fi
   ;;
   "restart")
+    echo "restarting unicorn"
     if [ -f $unicorn_pid ]; then kill `cat ${unicorn_pid}`; fi
     cd ${dir}
     ${unicorn_bin} -c ${unicorn_config} -E $RAILS_ENV -D
+  ;;
+  *)
+    echo "options are start|stop|graceful-stop|reload|restart"
   ;;
 esac
