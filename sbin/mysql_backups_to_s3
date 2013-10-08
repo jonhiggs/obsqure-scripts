@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 export AWS_CONFIG_FILE="/root/.aws.cfg"
 
+if [ "$1" -eq "-q" ]; then
+  output="/dev/null"
+else
+  output="/dev/stdout"
+fi
+
 for file in /srv/backups/production_obsqure-*; do
-	aws s3 mv ${file} s3://obsqure-backups/MySQL/$(basename ${file}) &> /dev/null
+	aws s3 mv ${file} s3://obsqure-backups/MySQL/$(basename ${file}) &> $output
 done
