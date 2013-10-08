@@ -11,4 +11,6 @@ fi
 
 cd /srv
 tar jcvf $backup_file git/ &> $output
-aws s3 mv ${backup_file} s3://obsqure-backups/Git/$(basename ${backup_file}) &> $output
+for file in /tmp/git-*.tar.bz2; do
+  aws s3 mv ${backup_file} s3://obsqure-backups/Git/$(basename ${file}) &> $output
+done
