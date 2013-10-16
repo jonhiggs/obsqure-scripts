@@ -19,6 +19,7 @@ tar jcf $backup_file \
   /etc/mysql/*            \
   /etc/passwd             \
   /etc/sudoers            \
+  /opt/mysqldumpx/*       \
   /var/cache/munin/www/*  \
   /var/spool/mail/*       \
   &> /dev/null
