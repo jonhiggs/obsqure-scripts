@@ -13,7 +13,7 @@ pushd /srv > /dev/null
 tar jcvf $backup_file git/ &> $output
 popd > /dev/null
 
-for file in /srv/backups/git-*.tar.bz2; do
+for file in /srv/backups/git-*.tar.bz2*; do
   encrypted_file=`$(dirname $0)/encrypt $file`
   `dirname $0`/to_s3 Git ${encrypted_file}
 done
