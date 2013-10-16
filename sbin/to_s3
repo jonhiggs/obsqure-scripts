@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+export AWS_CONFIG_FILE="/root/.aws.cfg"
+
+if [ $# -lt 2 ]; then
+  echo "USAGE:"
+  echo "$0 <backup_dir> <file1[|file2|file3]>"
+  exit 1
+fi
+
+backup_dir=$1
+shift
+
+for file in $@; do
+  aws s3 mv ${file} s3://obsqure-backups/${backup_dir}/$(basename ${file}) &> $output
+done
