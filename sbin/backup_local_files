@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-export AWS_CONFIG_FILE="/root/.aws.cfg"
 datestamp=$(date +"%Y-%m-%dT%H-%M-%S")
 backup_file="/srv/backups/system_files-${datestamp}.tar.bz2"
 
@@ -25,5 +24,6 @@ tar jcf $backup_file \
   &> /dev/null
 
 for file in /srv/backups/system_files-*.tar.bz2; do
-  aws s3 mv ${file} s3://obsqure-backups/Alpha/$(basename ${file}) &> $output
+  encrypted_file=`$(dirname $0)/encrypt $file`
+  `dirname $0`/to_s3 Alpha ${encrypted_file}
 done
