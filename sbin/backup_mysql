@@ -8,5 +8,6 @@ else
 fi
 
 for file in /srv/backups/production_obsqure-*; do
-	aws s3 mv ${file} s3://obsqure-backups/MySQL/$(basename ${file}) &> $output
+  encrypted_file=`$(dirname $0)/encrypt $file`
+  `dirname $0`/to_s3 MySQL ${encrypted_file}
 done
