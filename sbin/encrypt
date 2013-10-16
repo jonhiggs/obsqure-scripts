@@ -10,6 +10,6 @@ if echo "$1" | grep "\.gpg$"; then
   exit 0
 fi
 
-gpg -e -R "Jon Higgs" $1 &> /dev/null
+gpg -e --compress-level 0 -R "Jon Higgs" $1 &> /dev/null
 rm -f $1
 echo "${1}.gpg"
