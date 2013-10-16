@@ -11,5 +11,5 @@ backup_dir=$1
 shift
 
 for file in $@; do
-  aws s3 mv ${file} s3://obsqure-backups/${backup_dir}/$(basename ${file}) &> $output
+  aws s3 mv ${file} s3://obsqure-backups/${backup_dir}/$(basename ${file}) &> /dev/null
 done
