@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+if [ -z $1 ]; then
+  echo "gotta give me a file to encrypt"
+  exit 1
+fi
+
+gpg -e -R "Jon Higgs" $1 &> /dev/null
+rm -f $1
+echo "${1}.gpg"
