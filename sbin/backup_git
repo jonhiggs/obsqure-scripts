@@ -9,8 +9,9 @@ else
   output="/dev/stdout"
 fi
 
-cd /srv
+pushd /srv
 tar jcvf $backup_file git/ &> $output
+popd
 
 for file in /srv/backups/git-*.tar.bz2; do
   encrypted_file=`$(dirname $0)/encrypt $file`
