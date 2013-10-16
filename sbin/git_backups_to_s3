@@ -13,5 +13,6 @@ cd /srv
 tar jcvf $backup_file git/ &> $output
 
 for file in /srv/backups/git-*.tar.bz2; do
-  aws s3 mv ${file} s3://obsqure-backups/Git/$(basename ${file}) &> $output
+  encrypted_file=`$(dirname $0)/encrypt $file`
+  `dirname $0`/to_s3 Git ${encrypted_file}
 done
