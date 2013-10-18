@@ -8,12 +8,16 @@ function new_file_for() {
   echo $new_file
 }
 
-for file in /var/log/nginx/*.log.[0-9]?; do
-  LOG=`new_file_for $file`
-  mv $file $LOG
-  `dirname $0`/encrypt --compress $LOG
+for file in /var/log/nginx/*.log.[0-9]; do
+  if [ -f $file ]; then
+    LOG=`new_file_for $file`
+    mv $file $LOG
+    `dirname $0`/encrypt --compress $LOG
+  fi
 done
 
 for backup in /srv/backups/*access-*.log.gpg /srv/backups/*error-*.log.gpg; do
-  `dirname $0`/to_s3 "/Logs/NGINX" $backup
+  if [ -f $backup ]; then
+    `dirname $0`/to_s3 "Logs/NGINX" $backup
+  fi
 done
