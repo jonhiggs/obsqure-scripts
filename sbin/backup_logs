@@ -3,12 +3,12 @@
 function new_file_for() {
   # get last modification time
   original_file=`basename $1 | sed s/\.log.*//`
-  tmp_file="${original_file}-$(date --date=`stat --format=%y $1` +"%Y-%m-%dT%H-%M-%S").log"
+  tmp_file="${original_file}-$(date --date="`stat --format=%y $1`" +"%Y-%m-%dT%H-%M-%S").log"
   new_file="/srv/backups/$tmp_file"
   echo $new_file
 }
 
-for file in /var/log/nginx/*.1; do
+for file in /var/log/nginx/*.log.[0-9]; do
   LOG=`new_file_for $file`
   mv $file $LOG
   `dirname $0`/encrypt --compress $LOG
