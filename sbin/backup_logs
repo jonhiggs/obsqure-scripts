@@ -39,6 +39,7 @@ for type in NGINX MySQL Obsqure Postfix Auth Kern Syslog Upstart; do
     ;;
     "Upstart")
       dir="/var/log/upstart/*.log.[0-9]"
+    ;;
     *)
       dir=""
     ;;
