@@ -12,5 +12,5 @@ for file in /var/log/nginx/*.log.[0-9]; do
   LOG=`new_file_for $file`
   mv $file $LOG
   `dirname $0`/encrypt --compress $LOG
-  `dirname $0`/to_s3 $LOG
+  `dirname $0`/to_s3 "Logs/NGINX" $LOG
 done
