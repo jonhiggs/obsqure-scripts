@@ -7,7 +7,7 @@ if [ $# -lt 2 ]; then
   exit 1
 fi
 
-backup_dir=$1
+backup_dir=$(echo $1 | sed 's#^/##g' | sed 's#/$##g')
 shift
 
 for file in $@; do
