@@ -17,6 +17,7 @@ if echo "$1" | grep "\.gpg$"; then
   exit 0
 fi
 
-gpg -e --compress-level 0 -R "Jon Higgs" $1 &> /dev/null
-rm -f $1
-echo "${1}.gpg"
+for file in $@; do
+  gpg -e $compress -R "Jon Higgs" $file &> /dev/null && rm -f $file
+  echo "${file}.gpg"
+done
