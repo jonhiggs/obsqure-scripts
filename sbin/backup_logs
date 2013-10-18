@@ -14,7 +14,7 @@ function new_file_for() {
   echo $new_file
 }
 
-for type in NGINX MySQL Obsqure Postfix Auth Kern Syslog; do
+for type in NGINX MySQL Obsqure Postfix Auth Kern Syslog Upstart; do
   case $type in
     "NGINX")
       dir="/var/log/nginx/*.log.[0-9]"
@@ -37,6 +37,8 @@ for type in NGINX MySQL Obsqure Postfix Auth Kern Syslog; do
     "Syslog")
       dir="/var/log/syslog.[0-9]"
     ;;
+    "Upstart")
+      dir="/var/log/upstart/*.log.[0-9]"
     *)
       dir=""
     ;;
