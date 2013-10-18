@@ -14,19 +14,22 @@ function new_file_for() {
   echo $new_file
 }
 
-for type in NGINX MySQL Obsqure Postfix; do
+for type in NGINX MySQL Obsqure Postfix Auth; do
   case $type in
     "NGINX")
       dir="/var/log/nginx/*.log.[0-9]"
     ;;
     "MySQL")
-      dir="/var/log/mysql/*.log.[0-9]"
+      dir="/var/log/mysql/*.log.[0-9] /var/log/mysql*.[0-9]"
     ;;
     "Obsqure")
       dir="/srv/www/obsqure/shared/logs/*.log.[0-9]"
     ;;
     "Postfix")
       dir="/var/log/mail*.[0-9]"
+    ;;
+    "Auth")
+      dir="/var/log/auth.log.[0-9]"
     ;;
     *)
       dir=""
