@@ -6,6 +6,11 @@ function new_file_for() {
   original_file=`basename $1 | sed s/\.log.*//`
   tmp_file="${original_file}-$(date --date="`stat --format=%y $1`" +"%Y-%m-%dT%H-%M-%S").log"
   new_file="/srv/backups/$log_type/$tmp_file"
+
+  if [ ! -d `dirname $new_file` ]; then
+    mkdir -p `dirname $new_file`
+  fi
+
   echo $new_file
 }
 
