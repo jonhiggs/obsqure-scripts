@@ -2,22 +2,43 @@
 
 function new_file_for() {
   # get last modification time
+  log_type=$2
   original_file=`basename $1 | sed s/\.log.*//`
   tmp_file="${original_file}-$(date --date="`stat --format=%y $1`" +"%Y-%m-%dT%H-%M-%S").log"
-  new_file="/srv/backups/$tmp_file"
+  new_file="/srv/backups/$log_type/$tmp_file"
   echo $new_file
 }
 
-for file in /var/log/nginx/*.log.[0-9]; do
-  if [ -f $file ]; then
-    LOG=`new_file_for $file`
-    mv $file $LOG
-    `dirname $0`/encrypt --compress $LOG
-  fi
-done
+for type in NGINX MySQL Obsqure; do
+  case $type in
+    "NGINX")
+      dir="/var/log/nginx/*.log.[0-9]"
+    ;;
+    "MySQL")
+      dir="/var/log/mysql/*.log.[0-9]"
+    ;;
+    "Obsqure")
+      dir="/srv/www/obsqure/shared/logs/*.log.[0-9]"
+    ;;
+    *)
+      dir=""
+    ;;
+  esac
 
-for backup in /srv/backups/*access-*.log.gpg /srv/backups/*error-*.log.gpg; do
-  if [ -f $backup ]; then
-    `dirname $0`/to_s3 "Logs/NGINX" $backup
-  fi
+  # encrypt the log
+  for file in $dir; do
+    if [ -f $file ]; then
+      LOG=`new_file_for $file $type`
+      mv $file $LOG
+      `dirname $0`/encrypt --compress $LOG
+    fi
+  done 
+
+  # upload encrypted log to s3.
+  for backup in /srv/backups/$type/*.log.gpg; do
+    if [ -f $backup ]; then
+      `dirname $0`/to_s3 "Logs/$type" $backup
+    fi
+  done
+
 done
