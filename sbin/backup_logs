@@ -32,7 +32,7 @@ for type in NGINX MySQL Obsqure Postfix Auth Kern Syslog; do
       dir="/var/log/auth.log.[0-9]"
     ;;
     "Kern")
-      dir="/var/log/kern.log[0-9]"
+      dir="/var/log/kern.log.[0-9]"
     ;;
     "Syslog")
       dir="/var/log/syslog.[0-9]"
